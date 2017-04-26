@@ -1,0 +1,1507 @@
+<html lang="en-AU">
+    
+    <head>
+    
+        <meta charset="UTF-8" />
+        
+        <title>Diversification Calculator</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.3.0/css/bootstrap-slider.css">
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="DiversificationCalc.css">
+    
+    </head>
+    
+    <body>
+    
+        <nav class="navbar navbar-fixed-top navbar-light bg-faded">
+            
+            <a target="_blank" class="navbar-brand" href=""><img src="" alt="Logo"></a>
+            
+            <div class="container">
+            
+                <ul class="nav navbar-nav">
+                    
+                    <li class="nav-item hidden-sm-down">
+                    
+                        <h4>Divesification Calculator</h4>
+                    
+                    </li>
+                
+                    <li class="nav-item dropdown" id="dropdown">
+
+                        <button type="button" class="btn btn-primary" id="print" disabled>Print</button>
+
+                    </li>
+
+                </ul>
+                
+            </div>
+        
+        </nav>
+            
+        <div class="container nopadding">
+        
+            <div id="chart" class="container nopadding">
+                
+                <div id="instructionsWrap">
+                
+                    <canvas id="instructions"></canvas>
+                    
+                    <div class="overlay">
+                    
+                        <span>This Diversification Calculator is designed to assist mortgage brokers with identifying ways that they can diversify their business, to provide better service to their customers and increase additional income streams.</span>
+                        
+                        <br><br>
+                        
+                        <span>Start by entering the relevant average commission rates in the Assumptions tab below. Then continue through the remaining tabs to see how your business could be affected.</span>
+                    
+                    </div>
+
+                </div>
+                
+                <div class="hideme" id="mortgageChartWrap">
+                
+                    <canvas id="mortgageChart"></canvas>
+                    
+                </div>
+                
+                <div class="hideme" id="referralChartWrap">
+                
+                    <canvas id="referralChart"></canvas>
+                    
+                </div>
+                
+                <div class="hideme" id="totalChartWrap">
+                
+                    <canvas id="totalChart"></canvas>
+                    
+                </div>
+                
+                <div class="wrapper">
+                
+                    <div class="btn-group" data-toggle="buttons">
+
+                        <label class="btn btn-primary active" id="assumptions">
+                            <input class="togglebutton" type="radio" name="options" autocomplete="off" checked>Assumptions
+                        </label>
+                        
+                        <label class="btn btn-primary" id="mortgage">
+                            <input class="togglebutton" type="radio" name="options" autocomplete="off" checked>Mortgages
+                        </label>
+
+                        <label class="btn btn-primary" id="referral">
+                            <input class="togglebutton" type="radio" name="options" autocomplete="off">Referrals
+                        </label>
+
+                        <label class="btn btn-primary" id="total">
+                            <input class="togglebutton" type="radio" name="options" autocomplete="off">Total
+                        </label>
+
+                    </div>
+                    
+                </div>
+
+                <div class="row" id="assumption-sliders">
+
+                    <div class="slider-section col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="avgUpfront">Average Upfront Rate</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="avgUpfront" class="form-control" type="text" data-slider-min="0" data-silder-max="1" data-slider-step="0.01" data-slider-value="0.6" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="avgUpfront-val">0.6</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="splitOS">Own-Sourced Split</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="splitOS" class="form-control" type="text" data-slider-min="0" data-silder-max="100" data-slider-step="1" data-slider-value="80" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="splitOS-val">80</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="avgTrail">Average Trail Rate</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="avgTrail" class="form-control" type="text" data-slider-min="0" data-silder-max="0.3" data-slider-step="0.01" data-slider-value="0.15" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="avgTrail-val">0.15</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="splitRR">Referred Split</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="splitRR" class="form-control" type="text" data-slider-min="0" data-silder-max="100" data-slider-step="1" data-slider-value="45" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="splitRR-val">45</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+                
+                <div class="row hideme" id="mortgage-sliders">
+
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="avgMortgageSize">Average Mortgage Size</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="avgMortgageSize" class="form-control" type="text" data-slider-min="150000" data-silder-max="750000" data-slider-step="10000" data-slider-value="150000" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="avgMortgageSize-val" class="value">150000</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="avgOSSettlements">Average Own-Sourced Settlements (p.m.)</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="avgOSSettlements" class="form-control" type="text" data-slider-min="0" data-silder-max="30" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="avgOSSettlements-val">0</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="avgRRSettlements">Average Referred Settlements (p.m.)</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="avgRRSettlements" class="form-control" type="text" data-slider-min="0" data-silder-max="30" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="avgRRSettlements-val">0</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="existingBookSize">Existing Book Size</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="existingBookSize" class="form-control" type="text" data-slider-min="0" data-silder-max="100000000" data-slider-step="1000000" data-slider-value="0" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="existingBookSize-val" class="value">0</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="monthlyBookAmortisation">Monthly Book Amortisation</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="monthlyBookAmortisation" class="form-control" type="text" data-slider-min="0" data-silder-max="4" data-slider-step="0.1" data-slider-value="2" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="monthlyBookAmortisation-val">2</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+                
+                <div class="row hideme" id="referral-sliders">
+
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="fpReferrals">Financial Planning</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="fpReferrals" class="form-control" type="text" data-slider-min="0" data-silder-max="25" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="fpReferrals-val">0</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="settlementReferrals">Settlements/Legal</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="settlementReferrals" class="form-control" type="text" data-slider-min="0" data-silder-max="30" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="settlementReferrals-val">0</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="aliReferrals">Insurance</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="aliReferrals" class="form-control" type="text" data-slider-min="0" data-silder-max="25" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="aliReferrals-val">0</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="homecontentsReferrals">Home &amp; Contents</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="homecontentsReferrals" class="form-control" type="text" data-slider-min="0" data-silder-max="30" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="homecontentsReferrals-val">0</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                    
+                    <div class="slider-section col-xl-4 col-lg-6 col-xs-6">
+
+                        <form>
+
+                            <div class="form-group row">
+
+                                <label for="builderReferrals">Builder Referrals</label>
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <input id="builderReferrals" class="form-control" type="text" data-slider-min="0" data-silder-max="30" data-slider-step="1" data-slider-value="0" data-slider-tooltip="hide">
+
+                            </div>
+
+                            <div class="form-group row">
+
+                                <span id="builderReferrals-val">0</span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+            
+            <table id="data-table" class="table table-hover hideme">
+            
+                <thead>
+                
+                    <tr>
+                    
+                        <th>Month</th>
+                        <th>OS Upfront</th>
+                        <th>OS Trail</th>
+                        <th>RR Upfront</th>
+                        <th>RR Trail</th>
+                        <th>Book Size</th>
+                        <th>RR Book Size</th>
+                        <th>Total Book Size</th>
+                        <th>Book Amortisation</th>
+                        <th>RR Book Amortisation</th>
+                        <th>Total Book Amortisation</th>
+                        <th>Referrals</th>
+                        <th>Total Income</th>
+                        
+                    </tr>
+                
+                </thead>
+                
+                <tbody>
+                
+                    <!--Year 1-->
+                    <tr>
+                        <th scope="row">1</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">8</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">9</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">10</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">11</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">12</th>
+                        <td class="value OSUpfrontYear1"></td>
+                        <td class="value OSTrailYear1"></td>
+                        <td class="value RRUpfrontYear1"></td>
+                        <td class="value RRTrailYear1"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear1"></td>
+                        <td class="value TotalIncomeYear1"></td>
+                    </tr>
+                
+                    <!--Year 2-->
+                    <tr>
+                        <th scope="row">13</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">14</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">15</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">16</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">17</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">18</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">19</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">20</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">21</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">22</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">23</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">24</th>
+                        <td class="value OSUpfrontYear2"></td>
+                        <td class="value OSTrailYear2"></td>
+                        <td class="value RRUpfrontYear2"></td>
+                        <td class="value RRTrailYear2"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear2"></td>
+                        <td class="value TotalIncomeYear2"></td>
+                    </tr>
+                    
+                    <!--Year 3-->
+                    <tr>
+                        <th scope="row">25</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">26</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">27</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">28</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">29</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">30</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">31</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">32</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">33</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">34</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">35</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">36</th>
+                        <td class="value OSUpfrontYear3"></td>
+                        <td class="value OSTrailYear3"></td>
+                        <td class="value RRUpfrontYear3"></td>
+                        <td class="value RRTrailYear3"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear3"></td>
+                        <td class="value TotalIncomeYear3"></td>
+                    </tr>
+                    
+                    <!--Year 4-->
+                    <tr>
+                        <th scope="row">37</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">38</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">39</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">40</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">41</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">42</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">43</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">44</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">45</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">46</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">47</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">48</th>
+                        <td class="value OSUpfrontYear4"></td>
+                        <td class="value OSTrailYear4"></td>
+                        <td class="value RRUpfrontYear4"></td>
+                        <td class="value RRTrailYear4"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear4"></td>
+                        <td class="value TotalIncomeYear4"></td>
+                    </tr>
+                    
+                    <!--Year 5-->
+                    <tr>
+                        <th scope="row">49</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">50</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">51</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">52</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">53</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">54</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">55</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">56</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">57</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">58</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">59</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">60</th>
+                        <td class="value OSUpfrontYear5"></td>
+                        <td class="value OSTrailYear5"></td>
+                        <td class="value RRUpfrontYear5"></td>
+                        <td class="value RRTrailYear5"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value"></td>
+                        <td class="value ReferralsYear5"></td>
+                        <td class="value TotalIncomeYear5"></td>
+                    </tr>
+                    
+                </tbody>
+            
+            </table>
+            
+            <table id="total-table" class="table table-sm table-hover hideme">
+            
+                <thead>
+                
+                    <tr>
+                    
+                        <th></th>
+                        <th>Mortgages</th>
+                        <th>Referrals</th>
+                        <th>Total</th>
+                    
+                    </tr>
+                
+                </thead>
+                
+                <tbody>
+                
+                    <!--Year 1-->
+                    <tr>
+                        <th scope="row">Year 1</th>
+                        <td class="value TotalMortgagesYear1"></td>
+                        <td class="value TotalReferralsYear1"></td>
+                        <td class="value TotalYear1"></td>
+                    </tr>
+                    
+                    <!--Year 2-->
+                    <tr>
+                        <th scope="row">Year 2</th>
+                        <td class="value TotalMortgagesYear2"></td>
+                        <td class="value TotalReferralsYear2"></td>
+                        <td class="value TotalYear2"></td>
+                    </tr>
+                    
+                    <!--Year 3-->
+                    <tr>
+                        <th scope="row">Year 3</th>
+                        <td class="value TotalMortgagesYear3"></td>
+                        <td class="value TotalReferralsYear3"></td>
+                        <td class="value TotalYear3"></td>
+                    </tr>
+                    
+                    <!--Year 4-->
+                    <tr>
+                        <th scope="row">Year 4</th>
+                        <td class="value TotalMortgagesYear4"></td>
+                        <td class="value TotalReferralsYear4"></td>
+                        <td class="value TotalYear4"></td>
+                    </tr>
+                    
+                    <!--Year 5-->
+                    <tr>
+                        <th scope="row">Year 5</th>
+                        <td class="value TotalMortgagesYear5"></td>
+                        <td class="value TotalReferralsYear5"></td>
+                        <td class="value TotalYear5"></td>
+                    </tr>
+                
+                </tbody>
+            
+            </table>
+        
+        </div>
+        
+    </body>
+    
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.3.0/bootstrap-slider.min.js"></script>
+    
+    <script src="printThis.js"></script>
+    
+    <script type="text/javascript" src="DiversificationCalc_ChartLayout.js"></script>
+    
+    <script type="text/javascript" src="DiversificationCalc_Calc.js"></script>
+    
+
+</html>

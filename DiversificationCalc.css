@@ -1,0 +1,198 @@
+            .form-group {
+                
+                margin-left: 20px;
+                text-align: center;
+                
+            }
+            
+            .value::before {
+                
+                content: "$";
+                
+            }
+            
+            label {
+                
+                font-size: 15px;
+                
+            }
+            
+            #monthlyBookAmortisation-val::after {
+                
+                content: "%";
+                
+            }
+            
+            #avgUpfront-val::after {
+                
+                content: "%";
+                
+            }
+            
+            #splitOS-val::after {
+                
+                content: "%";
+                
+            }
+            
+            #avgTrail-val::after {
+                
+                content: "%";
+                
+            }
+            
+            #splitRR-val::after {
+                
+                content: "%";
+                
+            }
+            
+            .slider-handle {
+                
+                background: #553A6D;
+                
+            }
+            
+            .wrapper {
+                
+                text-align: center;
+                
+            }
+            
+            .btn-group {
+                
+                margin-top: 25px;
+                margin-bottom: 25px;
+                
+            }
+            
+            .btn-primary {
+                
+                background-color: #553A6D;
+                border-color: #6F7980;
+                
+            }
+                    
+            .btn-primary:hover {
+                
+                background-color: #342343;
+                border-color: #6F7980;
+                
+            }
+            
+            .btn-primary.active {
+                
+                background-color: #342343;
+                border-color: #6F7980;
+                
+            }
+            
+            .btn:focus {
+                
+                outline: none;
+                
+            }
+            
+            .hideme {
+                
+                display: none;
+            }
+            
+            #total-table .value, th {
+                
+                text-align: center;
+                
+            }
+            
+            #chart {
+                
+                margin-top: 65px;
+                
+            }
+            
+            nav img {
+                
+                height: 40px;
+                
+            }
+            
+            #dropdown {
+                
+                float: right;
+                padding-top: 5px;
+                                  
+            }
+            
+            .navbar {
+                
+                background-color: rgba(247, 247, 249,0.6)
+                
+            }
+            
+            nav h4 {
+                
+                margin-left: 30px;
+                padding-top: 12px;
+                
+            }
+            
+            nav button {
+                
+                float: right;
+                
+            }
+            
+            #instructionsWrap {
+                
+                position: relative;
+                
+            }
+            
+            #instructions {
+                
+                width: 100%;
+                
+            }
+            
+            .overlay {
+                
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                pointer-events: none;
+                padding: 80px 80px 0 80px;
+                
+            }
+            
+            @media (max-width: 991px) {
+                
+                .overlay {
+                     
+                    padding: 20px 80px 0 80px;
+                    font-size: 15px;
+                    
+                }
+                
+                .container.nopadding {
+
+                    padding-left: 0;
+                    padding-right: 0;
+
+                }
+                
+            }
+
+            @media screen and (max-width: 757px) {
+                
+                label {
+                    
+                    font-size: 200px;
+                    
+                }
+
+            }
+
+    
+            
